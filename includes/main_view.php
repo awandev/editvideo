@@ -5,16 +5,16 @@
         <canvas id="hudCanvas" width="1080" height="1920"></canvas>
     </div>
 
-    <!-- FLOATING SELECTION ACTION BAR (Muncul otomatis saat area timeline diblok) -->
+    <!-- FLOATING SELECTION ACTION BAR (Muncul otomatis saat area timeline diblok / diklik) -->
     <div id="selectionActionBar" class="hidden absolute bottom-16 left-1/2 -translate-x-1/2 bg-[#121215]/95 backdrop-blur-md border border-[#32323a] rounded-lg px-3 py-2 shadow-2xl z-30 flex flex-wrap items-center gap-2">
         <!-- Info Rentang Waktu -->
         <div class="flex items-center gap-1.5 pr-2 border-r border-[#27272a]">
-            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+            <span id="selStatusDot" class="w-2 h-2 rounded-full bg-amber-400"></span>
             <span id="lblSelRangeInfo" class="text-[11px] font-mono-tech font-semibold text-zinc-200">00:10 — 00:25 (15.0s)</span>
         </div>
 
         <!-- Aksi 1: Cut / Hapus Area -->
-        <button type="button" onclick="applyCutToSelection()" class="bg-red-600/20 hover:bg-red-600/30 text-red-300 border border-red-500/40 text-[11px] font-medium px-2.5 py-1 rounded flex items-center gap-1 transition" title="Remove selected range (Shortcut: Delete)">
+        <button type="button" onclick="applyCutToSelection()" class="bg-red-600/20 hover:bg-red-600/30 text-red-300 border border-red-500/40 text-[11px] font-medium px-2.5 py-1 rounded flex items-center gap-1 transition" title="Cut selected range">
             <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
                 <line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/>
@@ -34,13 +34,14 @@
         <div class="flex items-center gap-1 bg-[#09090b] border border-[#27272a] rounded px-1.5 py-0.5">
             <span class="text-[10px] font-mono-tech text-zinc-500">Speed:</span>
             <select id="selRegionSpeed" class="bg-transparent text-[11px] font-mono-tech text-orange-400 focus:outline-none cursor-pointer">
-                <option value="" class="bg-zinc-900">Default</option>
+                <option value="" class="bg-zinc-900">Default (Normal)</option>
                 <option value="0.5" class="bg-zinc-900">0.5x Slow</option>
                 <option value="1" class="bg-zinc-900">1.0x Normal</option>
                 <option value="2" class="bg-zinc-900">2.0x Fast</option>
                 <option value="5" class="bg-zinc-900">5.0x</option>
                 <option value="10" class="bg-zinc-900">10x</option>
                 <option value="20" class="bg-zinc-900">20x</option>
+                <option value="50" class="bg-zinc-900">50x</option>
             </select>
         </div>
 
@@ -69,9 +70,17 @@
             </select>
         </div>
 
-        <!-- Terapkan Region FX (Speed / LUT / Zoom) -->
+        <!-- Terapkan / Update Region FX -->
         <button type="button" onclick="applyFxToSelection()" class="bg-orange-500 hover:bg-orange-400 text-zinc-950 text-[11px] font-semibold px-2.5 py-1 rounded transition">
             Apply FX
+        </button>
+
+        <!-- BARU: Tombol Hapus / Reset Pengaturan Area (Muncul jika area punya Speed/FX/Cut) -->
+        <button type="button" id="btnResetRegionFx" onclick="resetSelectionSettings()" class="hidden bg-red-950/80 hover:bg-red-900 text-red-200 border border-red-500/50 text-[11px] font-medium px-2.5 py-1 rounded flex items-center gap-1 transition" title="Remove speed, FX, or cut settings in this area (Shortcut: Delete)">
+            <svg class="w-3 h-3 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+            </svg>
+            <span id="lblResetRegionBtn">Reset Setting</span>
         </button>
 
         <!-- Loop Preview Area -->
@@ -79,8 +88,8 @@
             Loop
         </button>
 
-        <!-- Batal / Hapus Seleksi -->
-        <button type="button" onclick="clearTimelineSelection()" class="text-zinc-500 hover:text-zinc-200 px-1.5 py-1 text-xs font-mono-tech transition" title="Clear selection (Esc)">
+        <!-- Tutup Seleksi -->
+        <button type="button" onclick="clearTimelineSelection()" class="text-zinc-500 hover:text-zinc-200 px-1.5 py-1 text-xs font-mono-tech transition" title="Close bar (Esc)">
             ×
         </button>
     </div>
@@ -129,13 +138,11 @@
         <!-- Timecode Berjalan -->
         <div class="text-xs font-mono-tech text-zinc-300 w-12 text-center" id="lblVideoTime">00:00</div>
 
-        <!-- INTERACTIVE TIMELINE TRACK (Bisa Drag-Select Area & Scrubbing) -->
+        <!-- INTERACTIVE TIMELINE TRACK (Klik blok biru/merah untuk edit/hapus, atau drag untuk blok baru) -->
         <div class="flex-1 flex flex-col justify-center relative py-1 select-none">
-            <!-- Bar Atas: Klik & Geser di sini untuk Memblok Area (Range Select) -->
-            <div id="interactiveRegionBar" class="w-full h-3.5 bg-[#16161a] border border-[#27272a] rounded-sm overflow-hidden relative mb-1 cursor-crosshair" title="Click & drag here to select a time range">
+            <div id="interactiveRegionBar" class="w-full h-3.5 bg-[#16161a] border border-[#27272a] rounded-sm overflow-hidden relative mb-1 cursor-crosshair" title="Click & drag to select range, or click an existing blue/red block to edit or remove it">
                 <div id="visualCutTrack" class="absolute inset-0 pointer-events-none"></div>
             </div>
-            <!-- Bar Bawah: Geser Playhead Video -->
             <input type="range" id="timelineSlider" min="0" max="1200" step="0.1" value="0" oninput="onSliderChange(this.value)" class="w-full">
         </div>
 
