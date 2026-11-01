@@ -21,6 +21,11 @@
                 </button>
             </div>
             <select id="timerStyleSelect" onchange="renderFrame()" class="input-tech w-full rounded px-2.5 py-1.5 text-xs">
+                <!-- Di dalam <select id="timerStyleSelect"> pada components/tab_timer.php, tambahkan di paling atas: -->
+                <optgroup label="0. Camcorder / VHS OSD" class="bg-zinc-900 text-orange-400">
+                    <option value="camcorder_timer_hhmmss" selected class="text-zinc-100">00A — Camcorder Stopwatch + HH:MM:SS (00:12:45)</option>
+                    <option value="camcorder_timer_mmss" class="text-zinc-100">00B — Camcorder Stopwatch + MM:SS</option>
+                </optgroup>
                 <optgroup label="A. Minimal / Text-Only" class="bg-zinc-900 text-zinc-400">
                     <option value="text_pure" class="text-zinc-100">01 — Pure Timecode Only</option>
                     <option value="clean_digital" class="text-zinc-100">02 — Digital + Top Label</option>
@@ -51,6 +56,8 @@
                     <option value="broadcast_tag" class="text-zinc-100">23 — Broadcast Corner Box</option>
                     <option value="match_split_flap" class="text-zinc-100">24 — Split-Digit Scoreboard</option>
                 </optgroup>
+
+                
             </select>
         </div>
 
@@ -72,6 +79,10 @@
         <div>
             <label class="block text-[10px] text-zinc-500 mb-1">Typography</label>
             <select id="timerFontSelect" onchange="renderFrame()" class="input-tech w-full rounded px-2.5 py-1.5 text-xs">
+                
+                <option value="'VCR OSD Mono', monospace" selected>VCR OSD Mono — Camcorder Slashed Zero (0)</option>
+                <option value="'Share Tech Mono', monospace">Share Tech Mono — Digital Camcorder</option>
+                <option value="'VT323', monospace">VT323 — Retro Pixel VHS</option>
                 <option value="'Chakra Petch', sans-serif">Chakra Petch — Technical</option>
                 <option value="'JetBrains Mono', monospace">JetBrains Mono — Tabular</option>
                 <option value="'Bebas Neue', sans-serif">Bebas Neue — Condensed Tall</option>

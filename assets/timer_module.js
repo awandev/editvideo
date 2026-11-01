@@ -34,6 +34,9 @@ function resetTimerPosition() {
 function syncTimerWithHrStyle() {
     const hrStyle = document.getElementById('hudStyleSelect')?.value;
     const map = {
+        'camcorder_hr_pulse':    'camcorder_timer_hhmmss',
+        'camcorder_hr_static':   'camcorder_timer_hhmmss',
+        'heart_num_side_static': 'camcorder_timer_hhmmss',
         'heart_num_side':   'text_pure',
         'heart_num_inside': 'text_pure',
         'dji_ring':         'match_dji_ring',
@@ -97,6 +100,14 @@ function drawStopwatchGlyph(ctx, cx, cy, r, color, secAngle = Math.PI * 0.4) {
     ctx.restore();
 }
 
+function formatHHMMSS(sec) {
+    sec = Math.max(0, Math.floor(sec));
+    const h = Math.floor(sec / 3600);
+    const m = Math.floor((sec % 3600) / 60);
+    const s = sec % 60;
+    return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+}
+
 function renderTimerOverlay(ctx) {
     const showCheckbox = document.getElementById('showTimerWidget');
     if (!showCheckbox || !showCheckbox.checked) return;
@@ -138,9 +149,28 @@ function renderTimerOverlay(ctx) {
     ctx.scale(scale, scale);
     ctx.shadowColor = 'rgba(0,0,0,0.85)';
     ctx.shadowBlur = 8;
+    // Letakkan di dalam renderTimerOverlay(ctx) pada assets/timer_module.js:
+    if (tStyle === 'camcorder_timer_hhmmss' || tStyle === 'camcorder_timer_mmss') {
+        const targetSec = (countMode === 'count_down')
+            ? Math.max(0, workoutMaxDuration - clampedElapsed)
+            : clampedElapsed;
+        const camClock = (tStyle === 'camcorder_timer_hhmmss')
+            ? formatHHMMSS(targetSec)
+            : formatMMSS(targetSec);
 
-    // --- KELOMPOK A: MINIMAL / TEXT-ONLY ---
-    if (tStyle === 'text_pure') {
+        ctx.shadowColor = 'rgba(0,0,0,0.95)';
+        ctx.shadowBlur = 6;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+
+        // Gambar ikon stopwatch putih di sebelah kiri seperti gambar referensi
+        drawStopwatchGlyph(ctx, 22, 26, 16, digitColor, secHandAng);
+
+        ctx.fillStyle = digitColor;
+        ctx.font = `700 42px ${fontFam}`;
+        ctx.fillText(camClock, 54, 41);
+
+    } else if (tStyle === 'text_pure') {
         ctx.fillStyle = digitColor;
         ctx.font = `900 62px ${fontFam}`;
         ctx.fillText(mainClock, 0, 58);

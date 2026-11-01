@@ -34,6 +34,12 @@
                     <option value="neon_glow" class="text-zinc-100">16 — Luminous Outline Box</option>
                     <option value="glass_badge" class="text-zinc-100">17 — Frosted Pill Capsule</option>
                 </optgroup>
+                <!-- Di dalam <select id="hudStyleSelect"> pada components/tab_hr.php, tambahkan di paling atas: -->
+                <optgroup label="Camcorder / VHS OSD (Seperti Gambar)" class="bg-zinc-900 text-orange-400">
+                    <option value="camcorder_hr_pulse" selected class="text-zinc-100">00A — Camcorder ♥ 170 BPM (Berdenyut)</option>
+                    <option value="camcorder_hr_static" class="text-zinc-100">00B — Camcorder ♥ 170 BPM (Statis / Diam)</option>
+                    <option value="heart_num_side_static" class="text-zinc-100">00C — Camcorder ♥ 170 Tanpa BPM (Statis)</option>
+                </optgroup>
             </select>
         </div>
 
@@ -52,6 +58,9 @@
                 <option value="'Montserrat', sans-serif">Montserrat — Geometric Sans</option>
                 <option value="'Orbitron', sans-serif">Orbitron — Sci-Fi Wide</option>
                 <option value="'Oswald', sans-serif">Oswald — Classic Din</option>
+                <option value="'VCR OSD Mono', monospace" selected>VCR OSD Mono — Camcorder Slashed Zero (0)</option>
+                <option value="'Share Tech Mono', monospace">Share Tech Mono — Digital Camcorder</option>
+                <option value="'VT323', monospace">VT323 — Retro Pixel VHS</option>
             </select>
         </div>
     </div>

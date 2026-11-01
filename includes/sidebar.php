@@ -9,6 +9,16 @@
         <span class="text-[9px] font-medium tracking-tight">Media</span>
     </button>
 
+
+    <!-- Tombol 0: Master Template (BARU) -->
+    <button onclick="openSideModal('template')" id="nav_template" class="rail-btn w-11 h-11 rounded-md flex flex-col items-center justify-center gap-1" title="Master Template Preset">
+        <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9h18M9 21V9"/>
+        </svg>
+        <span class="text-[9px] font-medium tracking-tight text-orange-400">Tpl</span>
+    </button>
+
     <!-- Tombol 2: Heart Rate -->
     <button onclick="openSideModal('hr')" id="nav_hr" class="rail-btn w-11 h-11 rounded-md flex flex-col items-center justify-center gap-1" title="Heart Rate Telemetry">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
@@ -71,6 +81,7 @@
 
     <div class="flex-1 overflow-y-auto divide-y divide-[#232329]">
         <?php include 'components/tab_video.php'; ?>
+        <?php include 'components/tab_template.php'; ?>
         <?php include 'components/tab_hr.php'; ?>
         <?php include 'components/tab_timer.php'; ?>
         <?php include 'components/tab_workout.php'; ?>

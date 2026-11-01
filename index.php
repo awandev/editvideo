@@ -35,6 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Font UI + 12 Font Overlay HUD -->
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@700;900&family=Bebas+Neue&family=Black+Ops+One&family=Chakra+Petch:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Montserrat:wght@700;900&family=Orbitron:wght@700;900&family=Oswald:wght@600;700&family=Rajdhani:wght@700&family=Russo+One&family=Teko:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- Tambahkan di dalam <head> pada index.php -->
+    <link href="https://fonts.cdnfonts.com/css/vcr-osd-mono" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-base: #09090b;
@@ -111,6 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     <script src="assets/audio_lut_module.js"></script>
     <script src="assets/title_module.js"></script>
     <script src="assets/cut_module.js"></script>
+    <script src="assets/template_module.js"></script>
 
 </body>
 </html>

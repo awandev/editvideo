@@ -48,15 +48,41 @@
         <!-- Aksi 4: Local LUT Override -->
         <div class="flex items-center gap-1 bg-[#09090b] border border-[#27272a] rounded px-1.5 py-0.5">
             <span class="text-[10px] font-mono-tech text-zinc-500">FX:</span>
-            <select id="selRegionLut" class="bg-transparent text-[11px] font-mono-tech text-sky-400 focus:outline-none cursor-pointer">
+            <!-- Aksi 4: Local LUT Override (20 Grouped Workout LUTs) -->
+        <div class="flex items-center gap-1 bg-[#09090b] border border-[#27272a] rounded px-1.5 py-0.5">
+            <span class="text-[10px] font-mono-tech text-zinc-500">FX:</span>
+            <select id="selRegionLut" class="bg-transparent text-[11px] font-mono-tech text-sky-400 focus:outline-none cursor-pointer max-w-[130px]">
                 <option value="" class="bg-zinc-900">Default LUT</option>
-                <option value="bw_noir" class="bg-zinc-900">B&W Noir</option>
-                <option value="teal_orange" class="bg-zinc-900">Teal & Orange</option>
-                <option value="bleach_grit" class="bg-zinc-900">Bleach Grit</option>
-                <option value="moody_dark" class="bg-zinc-900">Moody Dark</option>
-                <option value="cold_steel" class="bg-zinc-900">Cold Steel</option>
-                <option value="vibrant_pop" class="bg-zinc-900">Vibrant Pop</option>
+                <optgroup label="1. Hardcore Grit" class="bg-zinc-900 text-orange-400">
+                    <option value="bleach_grit" class="text-zinc-100">01 Bleach Grit</option>
+                    <option value="iron_shadow" class="text-zinc-100">02 Dark Iron</option>
+                    <option value="spartan_bronze" class="text-zinc-100">03 Spartan Bronze</option>
+                    <option value="concrete_raw" class="text-zinc-100">04 Concrete Raw</option>
+                    <option value="adrenaline_punch" class="text-zinc-100">05 Adrenaline HDR</option>
+                </optgroup>
+                <optgroup label="2. Cinema Gym" class="bg-zinc-900 text-sky-400">
+                    <option value="teal_orange" class="text-zinc-100">06 Teal & Orange</option>
+                    <option value="nike_commercial" class="text-zinc-100">07 Pro Commercial</option>
+                    <option value="moody_dark" class="text-zinc-100">08 Moody Dark</option>
+                    <option value="cyber_neon" class="text-zinc-100">09 Neon Night</option>
+                    <option value="anamorphic_blue" class="text-zinc-100">10 Anamorphic Blue</option>
+                </optgroup>
+                <optgroup label="3. Outdoor Street" class="bg-zinc-900 text-emerald-400">
+                    <option value="golden_hour" class="text-zinc-100">11 Golden Hour</option>
+                    <option value="tropical_calisthenics" class="text-zinc-100">12 Tropical Sun</option>
+                    <option value="urban_street" class="text-zinc-100">13 Urban Asphalt</option>
+                    <option value="high_noon" class="text-zinc-100">14 Sun Recovery</option>
+                    <option value="morning_mist" class="text-zinc-100">15 Crisp Morning</option>
+                </optgroup>
+                <optgroup label="4. B&W / Retro" class="bg-zinc-900 text-purple-400">
+                    <option value="bw_noir" class="text-zinc-100">16 Silver Noir B&W</option>
+                    <option value="bw_matte" class="text-zinc-100">17 Carbon Matte B&W</option>
+                    <option value="bw_red_filter" class="text-zinc-100">18 Titanium B&W</option>
+                    <option value="vhs_camcorder" class="text-zinc-100">19 90s Camcorder VHS</option>
+                    <option value="kodachrome" class="text-zinc-100">20 Kodachrome 64</option>
+                </optgroup>
             </select>
+        </div>
         </div>
 
         <!-- Aksi 5: Local Camera Zoom Punch-In -->

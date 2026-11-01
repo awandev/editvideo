@@ -111,7 +111,47 @@ function renderHrOverlay(ctx) {
     ctx.shadowColor = 'rgba(0,0,0,0.85)';
     ctx.shadowBlur = 8;
 
-    if (style === 'heart_num_side') {
+    // Letakkan di dalam renderHrOverlay(ctx) pada assets/hr_module.js:
+    if (style === 'camcorder_hr_pulse' || style === 'camcorder_hr_static') {
+        // Gaya Camcorder persis gambar: Lambang Hati Merah (Berdenyut / Statis) + 170 BPM
+        const currentBeat = (style === 'camcorder_hr_pulse') ? beatScale : 1.0;
+
+        ctx.save();
+        ctx.translate(22, 26);
+        ctx.scale(currentBeat, currentBeat);
+        ctx.shadowColor = 'rgba(0,0,0,0.9)';
+        ctx.shadowBlur = 6;
+        drawHeartVector(ctx, 0, -16, 36, heartColor);
+        ctx.restore();
+
+        ctx.shadowColor = 'rgba(0,0,0,0.95)';
+        ctx.shadowBlur = 6;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `700 44px ${fontFam}`;
+        const bpmStr = String(bpm);
+        ctx.fillText(bpmStr, 54, 42);
+
+        const bpmW = ctx.measureText(bpmStr).width;
+        ctx.font = `700 28px ${fontFam}`;
+        ctx.fillText('BPM', 54 + bpmW + 10, 42);
+
+    } else if (style === 'heart_num_side_static') {
+        // Lambang Hati Merah Statis + Angka Saja
+        ctx.save();
+        ctx.translate(26, 30);
+        drawHeartVector(ctx, 0, -18, 40, heartColor);
+        ctx.restore();
+
+        ctx.shadowColor = 'rgba(0,0,0,0.95)';
+        ctx.shadowBlur = 6;
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `700 48px ${fontFam}`;
+        ctx.fillText(String(bpm), 60, 46);
+
+    } else if (style === 'heart_num_side') {
         // 01: Hanya Gambar Heart + Angka Saja di Samping
         ctx.save();
         ctx.translate(32, 38);

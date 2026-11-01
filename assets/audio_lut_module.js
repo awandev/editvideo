@@ -1,5 +1,5 @@
 /**
- * AUDIO MIXER & LUT COLOR GRADING MODULE (FULL VERSION + 60FPS EXPORT FIX)
+ * AUDIO MIXER & 20 WORKOUT LUT COLOR GRADING MODULE (FULL VERSION)
  */
 
 const bgmAudio = document.getElementById('bgmAudio');
@@ -19,6 +19,119 @@ let lastAudioRepCount = 0;
 if (typeof modalTitles !== 'undefined') {
     modalTitles.audio_lut = 'Color LUT & Audio Mixer';
 }
+
+// ============================================================================
+// DATABASE 20 MODEL LUT WORKOUT (TERKELOMPOK 4 KATEGORI)
+// ============================================================================
+const WORKOUT_LUT_DATABASE = {
+    // GROUP 1: HARDCORE & MUSCLE GRIT
+    bleach_grit: {
+        name: '01 Bleach Grit',
+        contrast: 46, saturate: -55, brightness: -8, sepia: 0, grayscale: 0, hue: 0,
+        blend: 'soft-light', c1: [20, 28, 36, 0.35], c2: [10, 12, 16, 0.45], vignette: 0.55
+    },
+    iron_shadow: {
+        name: '02 Dark Iron',
+        contrast: 38, saturate: -22, brightness: -12, sepia: 0, grayscale: 0, hue: 0,
+        blend: 'overlay', c1: [30, 35, 42, 0.30], c2: [5, 7, 10, 0.50], vignette: 0.50
+    },
+    spartan_bronze: {
+        name: '03 Spartan Bronze',
+        contrast: 34, saturate: -15, brightness: -6, sepia: 38, grayscale: 0, hue: -5,
+        blend: 'soft-light', c1: [215, 135, 55, 0.38], c2: [35, 20, 10, 0.48], vignette: 0.48
+    },
+    concrete_raw: {
+        name: '04 Concrete Raw',
+        contrast: 24, saturate: -38, brightness: -4, sepia: 6, grayscale: 0, hue: 0,
+        blend: 'soft-light', c1: [120, 128, 135, 0.25], c2: [28, 32, 36, 0.30], vignette: 0.32
+    },
+    adrenaline_punch: {
+        name: '05 Adrenaline HDR',
+        contrast: 32, saturate: 28, brightness: 2, sepia: 0, grayscale: 0, hue: -2,
+        blend: 'overlay', c1: [255, 110, 40, 0.16], c2: [15, 25, 45, 0.22], vignette: 0.35
+    },
+
+    // GROUP 2: CINEMATIC & COMMERCIAL GYM
+    teal_orange: {
+        name: '06 Teal & Orange',
+        contrast: 22, saturate: 28, brightness: -3, sepia: 0, grayscale: 0, hue: 0,
+        blend: 'overlay', c1: [255, 135, 50, 0.25], c2: [0, 145, 180, 0.32], vignette: 0.28
+    },
+    nike_commercial: {
+        name: '07 Pro Commercial',
+        contrast: 18, saturate: 16, brightness: 6, sepia: 0, grayscale: 0, hue: 0,
+        blend: 'soft-light', c1: [240, 248, 255, 0.22], c2: [20, 50, 90, 0.18], vignette: 0.15
+    },
+    moody_dark: {
+        name: '08 Moody Dark',
+        contrast: 30, saturate: -26, brightness: -15, sepia: 0, grayscale: 0, hue: 0,
+        blend: 'soft-light', c1: [40, 48, 58, 0.25], c2: [8, 10, 14, 0.55], vignette: 0.60
+    },
+    cyber_neon: {
+        name: '09 Neon Night Gym',
+        contrast: 26, saturate: 36, brightness: -4, sepia: 0, grayscale: 0, hue: -8,
+        blend: 'screen', c1: [236, 72, 153, 0.18], c2: [6, 182, 212, 0.22], vignette: 0.40
+    },
+    anamorphic_blue: {
+        name: '10 Cobalt Anamorphic',
+        contrast: 24, saturate: -12, brightness: -5, sepia: 0, grayscale: 0, hue: -10,
+        blend: 'soft-light', c1: [180, 215, 255, 0.20], c2: [12, 55, 130, 0.42], vignette: 0.38
+    },
+
+    // GROUP 3: OUTDOOR & STREET CALISTHENICS
+    golden_hour: {
+        name: '11 Golden Hour',
+        contrast: 14, saturate: 32, brightness: 3, sepia: 24, grayscale: 0, hue: -4,
+        blend: 'soft-light', c1: [255, 175, 55, 0.35], c2: [180, 75, 20, 0.22], vignette: 0.20
+    },
+    tropical_calisthenics: {
+        name: '12 Tropical Sun',
+        contrast: 18, saturate: 38, brightness: 5, sepia: 4, grayscale: 0, hue: 3,
+        blend: 'overlay', c1: [255, 210, 90, 0.18], c2: [16, 165, 130, 0.18], vignette: 0.12
+    },
+    urban_street: {
+        name: '13 Urban Asphalt',
+        contrast: 26, saturate: -20, brightness: -2, sepia: 0, grayscale: 0, hue: -6,
+        blend: 'soft-light', c1: [235, 165, 110, 0.22], c2: [35, 55, 75, 0.34], vignette: 0.30
+    },
+    high_noon: {
+        name: '14 Harsh Sun Recovery',
+        contrast: -14, saturate: 10, brightness: 4, sepia: 6, grayscale: 0, hue: 0,
+        blend: 'soft-light', c1: [245, 225, 200, 0.25], c2: [60, 75, 95, 0.20], vignette: 0.10
+    },
+    morning_mist: {
+        name: '15 Crisp Morning',
+        contrast: 12, saturate: 8, brightness: 6, sepia: 0, grayscale: 0, hue: -6,
+        blend: 'soft-light', c1: [210, 240, 255, 0.28], c2: [45, 100, 140, 0.22], vignette: 0.15
+    },
+
+    // GROUP 4: MONOCHROME & RETRO CAMCORDER
+    bw_noir: {
+        name: '16 Silver Noir B&W',
+        contrast: 45, saturate: 0, brightness: -6, sepia: 0, grayscale: 100, hue: 0,
+        blend: 'overlay', c1: [255, 255, 255, 0.12], c2: [0, 0, 0, 0.35], vignette: 0.52
+    },
+    bw_matte: {
+        name: '17 Carbon Matte B&W',
+        contrast: 12, saturate: 0, brightness: 6, sepia: 8, grayscale: 100, hue: 0,
+        blend: 'screen', c1: [38, 38, 42, 0.28], c2: [28, 28, 32, 0.28], vignette: 0.25
+    },
+    bw_red_filter: {
+        name: '18 Titanium B&W',
+        contrast: 55, saturate: 0, brightness: 4, sepia: 4, grayscale: 100, hue: 0,
+        blend: 'soft-light', c1: [255, 250, 245, 0.25], c2: [10, 10, 12, 0.45], vignette: 0.45
+    },
+    vhs_camcorder: {
+        name: '19 90s Camcorder VHS',
+        contrast: 8, saturate: -18, brightness: 4, sepia: 18, grayscale: 0, hue: 4,
+        blend: 'screen', c1: [45, 32, 55, 0.22], c2: [25, 42, 38, 0.20], vignette: 0.28
+    },
+    kodachrome: {
+        name: '20 Kodachrome 64',
+        contrast: 22, saturate: 18, brightness: 0, sepia: 32, grayscale: 0, hue: -5,
+        blend: 'soft-light', c1: [255, 180, 75, 0.28], c2: [90, 30, 25, 0.26], vignette: 0.32
+    }
+};
 
 // ============================================================================
 // 1. WEB AUDIO API MIXER & SYNTHESIZER ENGINE
@@ -114,13 +227,15 @@ document.getElementById('bgmFileInput')?.addEventListener('change', function(e) 
 });
 
 // ============================================================================
-// 2. COLOR GRADING & 3D .CUBE LUT PARSER
+// 2. ENGINE RENDER 20 PRESET LUT + CUSTOM 3D .CUBE PARSER
 // ============================================================================
 window.onLutPresetChange = function() {
     const val = document.getElementById('lutPresetSelect')?.value || 'none';
     const lbl = document.getElementById('lblLutStatus');
     if (lbl) {
-        lbl.innerText = (val === 'none') ? 'Rec.709 Standard' : val.replace('_', ' ').toUpperCase();
+        if (val === 'none') lbl.innerText = 'Rec.709 Standard';
+        else if (WORKOUT_LUT_DATABASE[val]) lbl.innerText = WORKOUT_LUT_DATABASE[val].name;
+        else lbl.innerText = val.toUpperCase();
     }
     renderFrame();
 };
@@ -167,24 +282,20 @@ window.drawMediaWithPanZoom = function(ctx, media, mW, mH, cW, cH) {
     const camPanX   = parseFloat(document.getElementById('camPanX')?.value || 0);
     const camPanY   = parseFloat(document.getElementById('camPanY')?.value || 0);
 
+    const cfg = WORKOUT_LUT_DATABASE[preset] || null;
+
     ctx.save();
 
-    if (preset === 'teal_orange') {
-        ctx.filter = `contrast(${100 + 22 * intensity}%) saturate(${100 + 30 * intensity}%) brightness(${100 - 4 * intensity}%)`;
-    } else if (preset === 'moody_dark') {
-        ctx.filter = `contrast(${100 + 32 * intensity}%) saturate(${100 - 28 * intensity}%) brightness(${100 - 14 * intensity}%)`;
-    } else if (preset === 'bleach_grit') {
-        ctx.filter = `contrast(${100 + 45 * intensity}%) saturate(${100 - 55 * intensity}%) brightness(${100 - 8 * intensity}%)`;
-    } else if (preset === 'cold_steel') {
-        ctx.filter = `contrast(${100 + 18 * intensity}%) saturate(${100 - 20 * intensity}%) hue-rotate(${-12 * intensity}deg)`;
-    } else if (preset === 'golden_hour') {
-        ctx.filter = `contrast(${100 + 12 * intensity}%) saturate(${100 + 35 * intensity}%) sepia(${28 * intensity}%)`;
-    } else if (preset === 'kodachrome') {
-        ctx.filter = `contrast(${100 + 20 * intensity}%) sepia(${35 * intensity}%) saturate(${100 + 15 * intensity}%)`;
-    } else if (preset === 'bw_noir') {
-        ctx.filter = `grayscale(${100 * intensity}%) contrast(${100 + 42 * intensity}%) brightness(${100 - 6 * intensity}%)`;
-    } else if (preset === 'vibrant_pop') {
-        ctx.filter = `contrast(${100 + 18 * intensity}%) saturate(${100 + 45 * intensity}%) brightness(${100 + 4 * intensity}%)`;
+    // 1. Terapkan Base Filter (Contrast, Saturation, Brightness, Grayscale, Sepia, Hue)
+    if (cfg && intensity > 0.01) {
+        const filters = [];
+        if (cfg.grayscale)  filters.push(`grayscale(${Math.round(cfg.grayscale * intensity)}%)`);
+        if (cfg.sepia)      filters.push(`sepia(${Math.round(cfg.sepia * intensity)}%)`);
+        if (cfg.contrast)   filters.push(`contrast(${Math.round(100 + cfg.contrast * intensity)}%)`);
+        if (cfg.saturate)   filters.push(`saturate(${Math.round(100 + cfg.saturate * intensity)}%)`);
+        if (cfg.brightness) filters.push(`brightness(${Math.round(100 + cfg.brightness * intensity)}%)`);
+        if (cfg.hue)        filters.push(`hue-rotate(${Math.round(cfg.hue * intensity)}deg)`);
+        if (filters.length > 0) ctx.filter = filters.join(' ');
     }
 
     const baseScale = Math.max(cW / mW, cH / mH) * camZoom;
@@ -196,6 +307,7 @@ window.drawMediaWithPanZoom = function(ctx, media, mW, mH, cW, cH) {
     ctx.drawImage(media, dx, dy, dW, dH);
     ctx.filter = 'none';
 
+    // 2. Jika menggunakan File .CUBE Eksternal
     if (preset === 'custom_cube' && customCubeLut && intensity > 0.01) {
         try {
             const imgData = ctx.getImageData(0, 0, cW, cH);
@@ -212,26 +324,28 @@ window.drawMediaWithPanZoom = function(ctx, media, mW, mH, cW, cH) {
         } catch (err) {}
     }
 
-    if (preset !== 'none' && preset !== 'custom_cube' && intensity > 0) {
-        ctx.save();
-        if (preset === 'teal_orange') {
-            ctx.globalCompositeOperation = 'overlay';
+    // 3. Terapkan Split-Toning (Highlight/Shadow Color Matrix) & Vignette Sinematik
+    if (cfg && intensity > 0.01) {
+        if (cfg.blend && cfg.c1 && cfg.c2) {
+            ctx.save();
+            ctx.globalCompositeOperation = cfg.blend;
             const grad = ctx.createLinearGradient(0, 0, cW, cH);
-            grad.addColorStop(0, `rgba(255, 135, 50, ${0.22 * intensity})`);
-            grad.addColorStop(1, `rgba(0, 140, 175, ${0.28 * intensity})`);
-            ctx.fillStyle = grad; ctx.fillRect(0, 0, cW, cH);
-        } else if (preset === 'moody_dark' || preset === 'bleach_grit') {
-            const rad = ctx.createRadialGradient(cW/2, cH/2, cW*0.25, cW/2, cH/2, cH*0.75);
-            rad.addColorStop(0, 'rgba(0,0,0,0)'); rad.addColorStop(1, `rgba(0,0,0,${0.55 * intensity})`);
-            ctx.fillStyle = rad; ctx.fillRect(0, 0, cW, cH);
-        } else if (preset === 'cold_steel') {
-            ctx.globalCompositeOperation = 'soft-light';
-            ctx.fillStyle = `rgba(30, 110, 220, ${0.32 * intensity})`; ctx.fillRect(0, 0, cW, cH);
-        } else if (preset === 'golden_hour') {
-            ctx.globalCompositeOperation = 'soft-light';
-            ctx.fillStyle = `rgba(255, 160, 40, ${0.30 * intensity})`; ctx.fillRect(0, 0, cW, cH);
+            grad.addColorStop(0, `rgba(${cfg.c1[0]}, ${cfg.c1[1]}, ${cfg.c1[2]}, ${(cfg.c1[3] * intensity).toFixed(3)})`);
+            grad.addColorStop(1, `rgba(${cfg.c2[0]}, ${cfg.c2[1]}, ${cfg.c2[2]}, ${(cfg.c2[3] * intensity).toFixed(3)})`);
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, cW, cH);
+            ctx.restore();
         }
-        ctx.restore();
+
+        if (cfg.vignette && cfg.vignette > 0) {
+            ctx.save();
+            const rad = ctx.createRadialGradient(cW / 2, cH / 2, Math.min(cW, cH) * 0.28, cW / 2, cH / 2, Math.max(cW, cH) * 0.72);
+            rad.addColorStop(0, 'rgba(0,0,0,0)');
+            rad.addColorStop(1, `rgba(0,0,0,${(cfg.vignette * intensity).toFixed(3)})`);
+            ctx.fillStyle = rad;
+            ctx.fillRect(0, 0, cW, cH);
+            ctx.restore();
+        }
     }
 
     ctx.restore();
@@ -292,7 +406,6 @@ if (typeof window.togglePlaySim === 'function') {
     };
 }
 
-// Deteksi Codec Terbaik dengan Fallback Aman
 function detectBestCodec() {
     const candidates = [
         'video/mp4;codecs=avc1.640033,mp4a.40.2',
@@ -353,7 +466,6 @@ window.toggleRecording = function() {
         if (mime) opts.mimeType = mime;
         mediaRecorder = new MediaRecorder(stream, opts);
     } catch (err) {
-        // Fallback otomatis jika browser menolak kombinasi codec/bitrate tertentu
         mediaRecorder = new MediaRecorder(stream, { videoBitsPerSecond: targetBitrate });
     }
 

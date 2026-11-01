@@ -3,7 +3,7 @@
     <!-- Elemen Audio Backsound -->
     <audio id="bgmAudio" class="hidden" loop crossorigin="anonymous"></audio>
 
-    <!-- SEKSI 1: COLOR GRADING & 3D LUT -->
+    <!-- SEKSI 1: COLOR GRADING & 3D LUT (20 GROUPED PRESETS) -->
     <div class="p-4 space-y-3">
         <div class="flex items-center justify-between">
             <span class="text-[11px] font-semibold uppercase tracking-wider text-zinc-400">Color Grading (LUT)</span>
@@ -11,18 +11,45 @@
         </div>
 
         <div>
-            <label class="block text-[10px] text-zinc-500 mb-1">Color Profile / Preset</label>
+            <label class="block text-[10px] text-zinc-500 mb-1">Workout LUT Profile (20 Grouped Styles)</label>
             <select id="lutPresetSelect" onchange="onLutPresetChange()" class="input-tech w-full rounded px-2.5 py-1.5 text-xs">
-                <option value="none">00 — Bypass (Original Source)</option>
-                <option value="teal_orange">01 — Teal & Orange (Cinema Gym)</option>
-                <option value="moody_dark">02 — Moody Dark Contrast</option>
-                <option value="bleach_grit">03 — Bleach Bypass (Hardcore Grit)</option>
-                <option value="cold_steel">04 — Cold Steel (Tactical Blue)</option>
-                <option value="golden_hour">05 — Warm tungsten / Golden Hour</option>
-                <option value="kodachrome">06 — Vintage Film Stock</option>
-                <option value="bw_noir">07 — Monochrome High-Contrast</option>
-                <option value="vibrant_pop">08 — Commercial Saturation Pop</option>
-                <option value="custom_cube">09 — Custom 3D LUT (.CUBE)</option>
+                <option value="none" class="bg-zinc-900 text-zinc-300">00 — Bypass (Original Rec.709)</option>
+
+                <optgroup label="Group 1 — Hardcore & Muscle Grit (5 Styles)" class="bg-zinc-900 text-orange-400">
+                    <option value="bleach_grit" class="text-zinc-100">01 — Bleach Bypass (Hardcore Grit)</option>
+                    <option value="iron_shadow" class="text-zinc-100">02 — Dark Iron (Muscle Definition)</option>
+                    <option value="spartan_bronze" class="text-zinc-100">03 — Spartan Bronze (Warm Grit)</option>
+                    <option value="concrete_raw" class="text-zinc-100">04 — Concrete Raw (Industrial Box)</option>
+                    <option value="adrenaline_punch" class="text-zinc-100">05 — Adrenaline HDR (Micro-Contrast)</option>
+                </optgroup>
+
+                <optgroup label="Group 2 — Cinematic & Commercial Gym (5 Styles)" class="bg-zinc-900 text-sky-400">
+                    <option value="teal_orange" class="text-zinc-100">06 — Teal & Orange (Cinema Gym)</option>
+                    <option value="nike_commercial" class="text-zinc-100">07 — Pro Commercial (Clean & Crisp)</option>
+                    <option value="moody_dark" class="text-zinc-100">08 — Moody Dark (Aesthetic Focus)</option>
+                    <option value="cyber_neon" class="text-zinc-100">09 — Neon Night Gym (Cyan/Magenta)</option>
+                    <option value="anamorphic_blue" class="text-zinc-100">10 — Cobalt Anamorphic (Cool Cinema)</option>
+                </optgroup>
+
+                <optgroup label="Group 3 — Outdoor & Street Calisthenics (5 Styles)" class="bg-zinc-900 text-emerald-400">
+                    <option value="golden_hour" class="text-zinc-100">11 — Golden Hour (Warm Sunset)</option>
+                    <option value="tropical_calisthenics" class="text-zinc-100">12 — Tropical Sun (Vibrant Daylight)</option>
+                    <option value="urban_street" class="text-zinc-100">13 — Urban Asphalt (Cool Concrete)</option>
+                    <option value="high_noon" class="text-zinc-100">14 — Harsh Sun Recovery (Soft Highlight)</option>
+                    <option value="morning_mist" class="text-zinc-100">15 — Crisp Morning (Fresh Cool Air)</option>
+                </optgroup>
+
+                <optgroup label="Group 4 — Monochrome & Retro Camcorder (5 Styles)" class="bg-zinc-900 text-purple-400">
+                    <option value="bw_noir" class="text-zinc-100">16 — Silver Noir (High-Contrast B&W)</option>
+                    <option value="bw_matte" class="text-zinc-100">17 — Carbon Matte (Faded Film B&W)</option>
+                    <option value="bw_red_filter" class="text-zinc-100">18 — Titanium B&W (Bright Skin Tone)</option>
+                    <option value="vhs_camcorder" class="text-zinc-100">19 — 90s Camcorder Tape (Retro VHS)</option>
+                    <option value="kodachrome" class="text-zinc-100">20 — Kodachrome 64 (Vintage Analog)</option>
+                </optgroup>
+
+                <optgroup label="External File" class="bg-zinc-900 text-zinc-400">
+                    <option value="custom_cube" class="text-zinc-100">21 — Custom 3D LUT (.CUBE File)</option>
+                </optgroup>
             </select>
         </div>
 
@@ -88,7 +115,6 @@
         <div class="text-[11px] font-semibold uppercase tracking-wider text-zinc-400">Channel Mixer</div>
 
         <div class="space-y-3">
-            <!-- Ch 1: Original Video Audio -->
             <div>
                 <div class="flex justify-between text-[11px] mb-1">
                     <span class="text-zinc-400">CH 1 — Source Video Audio</span>
@@ -97,7 +123,6 @@
                 <input type="range" id="videoVolSlider" min="0" max="1.5" step="0.05" value="0.80" oninput="updateAudioVolumes()" class="w-full">
             </div>
 
-            <!-- Ch 2: Backsound Music -->
             <div>
                 <div class="flex justify-between text-[11px] mb-1">
                     <span class="text-zinc-400">CH 2 — BGM Track Gain</span>
@@ -106,7 +131,6 @@
                 <input type="range" id="bgmVolSlider" min="0" max="1.5" step="0.05" value="0.60" oninput="updateAudioVolumes()" class="w-full">
             </div>
 
-            <!-- Ch 3: Telemetry SFX -->
             <div>
                 <div class="flex justify-between text-[11px] mb-1">
                     <span class="text-zinc-400">CH 3 — Telemetry Cue SFX</span>
